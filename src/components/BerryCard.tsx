@@ -27,7 +27,7 @@ export const BerryCard = ({ berry }: BerryCardProps) => {
         <Stack direction="row" spacing={2} alignItems="center">
           <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
             <img
-              src="/raspberry.svg"
+              src="./raspberry.svg"
               alt="Berry icon"
               style={berryStyles.image}
             />
