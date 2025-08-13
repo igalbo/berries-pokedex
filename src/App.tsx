@@ -14,7 +14,6 @@ import { useBerries } from "./hooks/useBerries";
 
 export default function App() {
   const {
-    berries,
     loading,
     error,
     filteredBerries,
@@ -27,7 +26,7 @@ export default function App() {
 
   if (loading) {
     return (
-      <Container sx={{ py: 4, display: "flex", justifyContent: "center" }}>
+      <Container className="loading-container">
         <CircularProgress />
         <Typography variant="h6" sx={{ ml: 2 }}>
           Loading berries...
@@ -38,55 +37,68 @@ export default function App() {
 
   if (error) {
     return (
-      <Container sx={{ py: 4 }}>
+      <Container className="error-container">
         <Alert severity="error">{error}</Alert>
       </Container>
     );
   }
 
   return (
-    <Container
-      sx={{ py: 4, height: "100vh", display: "flex", flexDirection: "column" }}
-    >
+    <Container className="app-container">
       <Typography variant="h4" gutterBottom>
         Berries Pokedex
       </Typography>
-      <Paper
-        elevation={4}
-        sx={{
-          p: 3,
-          flex: 1,
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Stack direction="row" spacing={3} sx={{ flex: 1, overflow: "hidden" }}>
-          <FirmnessSlider
-            selectedFirmness={selectedFirmness}
-            onFirmnessChange={setSelectedFirmness}
-            firmnessCounts={firmnessCounts}
-          />
+      <Paper elevation={4} className="main-paper">
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={3}
+          sx={{
+            flex: { xs: "none", sm: 1 },
+            overflow: { xs: "visible", sm: "hidden" },
+          }}
+        >
+          <Box sx={{ minWidth: { sm: "auto" } }}>
+            <FirmnessSlider
+              selectedFirmness={selectedFirmness}
+              onFirmnessChange={setSelectedFirmness}
+              firmnessCounts={firmnessCounts}
+            />
+          </Box>
           <Box
             sx={{
               flex: 1,
               display: "flex",
               flexDirection: "column",
-              overflow: "hidden",
+              overflow: { xs: "visible", sm: "hidden" },
             }}
           >
-            <SearchBar
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-            />
-            <Box sx={{ mt: 2, flex: 1, overflow: "auto", p: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: { xs: "center", sm: "flex-end" },
+                mb: { xs: 1, sm: 0 },
+              }}
+            >
+              <SearchBar
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+              />
+            </Box>
+            <Box
+              sx={{
+                mt: 2,
+                flex: { xs: "none", sm: 1 },
+                overflow: { xs: "visible", sm: "auto" },
+                p: 2,
+              }}
+            >
               <Stack direction="column" spacing={2}>
                 {filteredBerries.length > 0 ? (
                   filteredBerries.map((berry) => (
                     <BerryCard key={berry.id} berry={berry} />
                   ))
                 ) : (
-                  <Typography variant="body1" color="text.secondary">
+                  <Typography variant="body1" color="textDisabled">
                     No berries found matching your criteria.
                   </Typography>
                 )}

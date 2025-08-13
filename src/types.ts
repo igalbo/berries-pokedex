@@ -1,4 +1,4 @@
-// Simplified types for our berries pokedex
+// Types for our berries pokedex
 
 export interface BerryFlavor {
   potency: number;

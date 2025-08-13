@@ -1,5 +1,5 @@
-import { TextField, InputAdornment } from "@mui/material";
-import { Search } from "@mui/icons-material";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
+import { Search, Clear } from "@mui/icons-material";
 
 interface SearchBarProps {
   searchQuery: string;
@@ -7,23 +7,45 @@ interface SearchBarProps {
 }
 
 export const SearchBar = ({ searchQuery, onSearchChange }: SearchBarProps) => {
+  const handleClear = () => {
+    onSearchChange("");
+  };
+
   return (
     <TextField
-      fullWidth
       variant="outlined"
-      placeholder="Search berries by name..."
+      placeholder="Search by name..."
       value={searchQuery}
       onChange={(e) => onSearchChange(e.target.value)}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <Search />
-          </InputAdornment>
-        ),
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <Search />
+            </InputAdornment>
+          ),
+          endAdornment: searchQuery && (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={handleClear}
+                edge="end"
+                size="small"
+                aria-label="clear search"
+              >
+                <Clear />
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
       }}
       sx={{
+        width: 240,
+        m: 1,
         "& .MuiOutlinedInput-root": {
-          borderRadius: 2,
+          height: "36px", // Make it smaller
+        },
+        "& .MuiOutlinedInput-input": {
+          padding: "8px 0", // Reduce vertical padding
         },
       }}
     />

@@ -1,13 +1,14 @@
 import axios from "axios";
-import type { Berry, BerryListResponse, ProcessedBerry, BerriesCache } from "../types/berry";
+import type { Berry, BerryListResponse, ProcessedBerry, BerriesCache } from "../types";
 
 const CACHE_KEY = "berries_cache";
-const CACHE_DURATION = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+const CACHE_DURATION = 2 * 60 * 60 * 1000; // 2 hours
 
 // Helper function to extract berry ID from URL
 const extractBerryId = (url: string): number => {
-  const matches = url.match(/\/berry\/(\d+)\//);
-  return matches ? parseInt(matches[1], 10) : 0;
+  const parts = url.split('/');
+  const id = parts[parts.length - 2];
+  return parseInt(id) || 0;
 };
 
 // Helper function to process berry data
